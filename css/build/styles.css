@@ -392,9 +392,28 @@ th {
 }
 
 body {
-  background-color: #1d2e3e;
+  background-color: #e58632;
 }
 
-h1 {
-  color: #ffffff;
+.container {
+  position: absolute;
+  top: 50%;
+  margin-top: -200px;
+  left: 0;
+  width: 100%;
+}
+
+.content {
+  width: 800px;
+  margin: 0 auto;
+  height: 400px;
+  text-align: center;
+}
+
+p {
+  font-family: "Titillium Web", sans-serif;
+  color: #452e0f;
+  font-size: 32px;
+  text-transform: uppercase;
+  margin: 0;
 }
