@@ -28,7 +28,7 @@ module.exports = function(grunt) {
           style: 'expanded'
         },
         files: {
-          'css/build/styles.css': 'css/styles.scss',
+          'css/build/styles.css': 'css/*.scss',
         }
       }
     },
@@ -36,8 +36,9 @@ module.exports = function(grunt) {
         options: {
         browsers: ['last 2 version']
       },
-      no_dest: {
-        src: 'css/build/styles.css'
+      single_file: {
+        src: 'css/styles.css',
+        dest: 'css/main.css'
       }
     },
     cssmin: {
@@ -45,7 +46,7 @@ module.exports = function(grunt) {
         keepSpecialComments: 0,
       },
       css: {
-        src: 'css/build/styles.css',
+        src: 'css/main.css',
         dest: 'css/build/main.min.css'
       }
     },
@@ -71,7 +72,7 @@ module.exports = function(grunt) {
         }
       },
       css: {
-        files: ['css/*.scss'],
+        files: ['css/*.scss', 'css/styles.css', 'css/main.css'],
         tasks: ['sass', 'autoprefixer', 'cssmin'],
         options: {
           spawn: false,
@@ -79,13 +80,13 @@ module.exports = function(grunt) {
       },
       images: {
         files: ['img/*.{png,jpg,gif}'],
-        tasks: ['imagemin'],
+        tasks: ['imagemin:dynamic'],
         options: {
           spawn: false,
         }
       },
       php:{
-        files: ['./**/*.php', './include/*.php'],
+        files: ['./**/*.php', './inc/*.php'],
         tasks: [],
         options: {
           spawn: false
