@@ -12,13 +12,13 @@ module.exports = function(grunt) {
             src: [
                 'js/*.js', // All JS in the folder
             ],
-            dest: 'js/build/production.js',
+            dest: 'tmp/js/production.js',
         }
     },
     uglify: {
       my_target: {
         files: {
-          'js/build/production.min.js': ['js/build/production.js']
+          'build/js/production.min.js': ['tmp/js/production.js']
         }
       }
     },
@@ -28,7 +28,7 @@ module.exports = function(grunt) {
           style: 'expanded'
         },
         files: {
-          'css/build/styles.css': 'css/*.scss',
+          'tmp/css/main.css': 'scss/*.scss',
         }
       }
     },
@@ -36,9 +36,11 @@ module.exports = function(grunt) {
         options: {
         browsers: ['last 2 version']
       },
-      single_file: {
-        src: 'css/styles.css',
-        dest: 'css/main.css'
+      multiple_files: {
+        expand: true,
+        flatten: true,
+        src: 'tmp/css/*.css',
+        dest: 'tmp/css/'
       }
     },
     cssmin: {
@@ -46,8 +48,11 @@ module.exports = function(grunt) {
         keepSpecialComments: 0,
       },
       css: {
-        src: 'css/main.css',
-        dest: 'css/build/main.min.css'
+        expand: true,
+        cwd: 'tmp/css/',
+        src: ['*.css', '!*.min.css'],
+        dest: 'build/css/',
+        ext: '.min.css'
       }
     },
     imagemin: {
@@ -56,7 +61,7 @@ module.exports = function(grunt) {
             expand: true,
             cwd: 'img/',
             src: ['**/*.{png,jpg,gif}'],
-            dest: 'img/build/'
+            dest: 'build/img'
         }]
       }
     },
@@ -72,7 +77,7 @@ module.exports = function(grunt) {
         }
       },
       css: {
-        files: ['css/*.scss', 'css/styles.css', 'css/main.css'],
+        files: ['scss/*.scss'],
         tasks: ['sass', 'autoprefixer', 'cssmin'],
         options: {
           spawn: false,
@@ -80,13 +85,13 @@ module.exports = function(grunt) {
       },
       images: {
         files: ['img/*.{png,jpg,gif}'],
-        tasks: ['imagemin:dynamic'],
+        tasks: ['imagemin'],
         options: {
           spawn: false,
         }
       },
-      php:{
-        files: ['./**/*.php', './inc/*.php'],
+      html:{
+        files: ['./**/*.html'],
         tasks: [],
         options: {
           spawn: false
